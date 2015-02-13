@@ -80,8 +80,13 @@
 			<s:TextInput id="green" width="100"/>
 			<s:Label text="Blue:" />
 			<s:TextInput id="blue" width="100" />
+			<s:Button label="Add Color" click="applyColor(event)" />
 		</s:HGroup>
-		<s:Button label="Add Color" click="applyColor(event)" />
+		<s:HGroup>
+			<s:Label text="Hex #:" />
+			<s:TextInput id="hexInput" width="140" />
+			<s:Button label="Add Hex Color" click="tiledBackground.applyHexColor(hexInput.text)" />			
+		</s:HGroup>
 		<s:Button label="Back" click="goBack(event)" />
 	</s:VGroup>
 </s:View>
