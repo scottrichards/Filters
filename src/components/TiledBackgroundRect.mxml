@@ -8,11 +8,11 @@
 		<![CDATA[
 			import flash.filters.ColorMatrixFilter;
 			
+			import utility.ColorUtility;
+			
 			[Bindable]
 			public var imageClass : Class;
-			
-	//		private var backgroundTileImage : Bit
-			
+						
 			private function createColorMatrix(red : Number, green : Number, blue : Number):Array {	
 				var matrix:Array = new Array();
 				matrix = matrix.concat([Number(red), 0, 0, 0, 0]); // red
@@ -22,22 +22,28 @@
 				return matrix;
 			}
 			
-			private function applyFilter(child:DisplayObject, matrix:Array):void {
+			private function applyFilter( matrix:Array):void {
 				var filter:ColorMatrixFilter = new ColorMatrixFilter(matrix);
 				var filters:Array = new Array();
 				filters.push(filter);
-				child.filters = filters;
+				this.filters = filters;
 			}
 			
-			public function applyColor():void
+			
+			public function applyHexColor(hexString : String):void
 			{
-				var colorMatrix : Array = createColorMatrix(.6,.6,1);
-				applyFilter(backgroundTileFile as DisplayObject,colorMatrix);
+				var rgb : Object = ColorUtility.hexStringToRGB(hexString);
+				applyColor(rgb.red,rgb.green,rgb.blue);
+			}
+			
+			public function applyColor(red : Number, green : Number, blue : Number):void
+			{
+				var colorMatrix : Array = createColorMatrix(red,green,blue);
+				applyFilter(colorMatrix);
 			}
 			
 			public function setBackgroundImage(imageClass : Class):void
 			{
-//				var bitmapFill : GraphicsBitmapFill = new GraphicsBitmapFill(imageClass,null,true);
 				backgroundTileFile.source = imageClass;
 			}
 		]]>

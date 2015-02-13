@@ -38,35 +38,16 @@
 			{
 				navigator.popView();
 			}
-			
-			private function applyColor(event:Event):void {
-	//			tiledBackground.applyColor(Number(red.text),Number(green.text),Number(blue.text));				
-				var matrix:Array = new Array();
-				matrix = matrix.concat([Number(red.text), 0, 0, 0, 0]); // red
-				matrix = matrix.concat([0, Number(green.text), 0, 0, 0]); // green
-				matrix = matrix.concat([0, 0, Number(blue.text), 0, 0]); // blue
-				matrix = matrix.concat([0, 0, 0, 1, 0]); // alpha	
-				applyFilter(matrix);
-			}
-			
-			private function applyFilter(matrix:Array):void {
-				var filter:ColorMatrixFilter = new ColorMatrixFilter(matrix);
-				var filters:Array = new Array();
-				filters.push(filter);
-				tiledBackground.filters = filters;
-			}
-			
+						
 		]]>
 	</fx:Script>
 	
-<!--	<s:Rect id="backgroundRect" left="0" right="0" top="0" bottom="0"  >
-		<s:fill>
-			<s:BitmapFill id="backgroundTileFile" source="@Embed('assets/patterns/seamless_paper_texture.png')" fillMode="repeat" />
-		</s:fill>
-	</s:Rect>
-	-->
 	
-	<components:TiledBackgroundRect2 id="tiledBackground"/> 
+	<s:navigationContent>
+		<s:Button label="Back" click="navigator.popToFirstView();"/>
+	</s:navigationContent>
+	
+	<components:TiledBackgroundRect id="tiledBackground"/> 
 	
 	<s:VGroup paddingTop="100" paddingLeft="100">
 		
@@ -80,13 +61,12 @@
 			<s:TextInput id="green" width="100"/>
 			<s:Label text="Blue:" />
 			<s:TextInput id="blue" width="100" />
-			<s:Button label="Add Color" click="applyColor(event)" />
+			<s:Button label="Add Color" click="tiledBackground.applyColor(Number(red.text),Number(green.text),Number(blue.text))" />
 		</s:HGroup>
 		<s:HGroup>
 			<s:Label text="Hex #:" />
 			<s:TextInput id="hexInput" width="140" />
 			<s:Button label="Add Hex Color" click="tiledBackground.applyHexColor(hexInput.text)" />			
 		</s:HGroup>
-		<s:Button label="Back" click="goBack(event)" />
 	</s:VGroup>
 </s:View>

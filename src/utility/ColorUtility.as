@@ -1,12 +1,12 @@
 package utility
 {
-	public class StringUtility
+	public class ColorUtility
 	{
-		public function StringUtility()
+		public function ColorUtility()
 		{
 		}
 		
-		public function hexToRGB(hex:Number):Object
+		static public function hexToRGB(hex:Number):Object
 		{
 			var rgbObj:Object = {
 				red: ((hex & 0xFF0000) >> 16) / 255,
@@ -17,14 +17,14 @@ package utility
 			return rgbObj;
 		}
 		
-		public function stringToHexInt(hexString : String):int
+		static public function stringToHexInt(hexString : String):int
 		{
 			return parseInt(hexString,16);
 		}
 		
 		static public function hexStringToRGB(hexString : String):Object
 		{
-			
+			return(hexToRGB(stringToHexInt(hexString)));
 		}
 	}
 }

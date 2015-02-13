@@ -36,7 +36,7 @@
 			
 		]]>
 	</fx:Script>
-	<components:TiledBackgroundRect2 imageClass="{PatternAssets.getNamedPattern('School')}"/>
+	<components:TiledBackgroundRect imageClass="{PatternAssets.getNamedPattern('School')}"/>
 	<s:VGroup>
 		<s:BitmapImage id="birdImage" source="@Embed('assets/Baby Birds.eps.ai.png')" width="80%" />
 		<s:Button label="Drop Shadow" click="addDropShadow(event)" />
