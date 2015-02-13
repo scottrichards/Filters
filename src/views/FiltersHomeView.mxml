@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="HomeView" xmlns:views="views.*" xmlns:components="components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.*;
+			import data.PatternAssets;
+			
+			protected const BLUR:Class = flash.filters.BlurFilter;
+			protected const GLOW:Class = flash.filters.GlowFilter;
+			protected const SHADOW:Class = flash.filters.DropShadowFilter;
+			
+			protected function backgroundTiles(event:MouseEvent):void
+			{
+				navigator.pushView(views.TiledBackground);
+			}
+			
+			protected function coloredImage(event:MouseEvent):void
+			{
+				navigator.pushView(views.ColorBitmap);
+			}
+			
+			protected function addDropShadow(event:MouseEvent):void
+			{				
+				var arr:Array = birdImage.filters.concat();
+				var fil:BitmapFilter = new SHADOW as BitmapFilter;
+				arr.push(fil);
+				var fil2:DropShadowFilter = new SHADOW;
+				fil2.angle = 225;
+				arr.push(fil2);
+				birdImage.filters = arr;
+			}
+			
+		]]>
+	</fx:Script>
+	<components:TiledBackgroundRect2 imageClass="{PatternAssets.getNamedPattern('School')}"/>
+	<s:VGroup>
+		<s:BitmapImage id="birdImage" source="@Embed('assets/Baby Birds.eps.ai.png')" width="80%" />
+		<s:Button label="Drop Shadow" click="addDropShadow(event)" />
+		<s:Button label="Background Tiles" click="backgroundTiles(event)" />
+		<s:Button label="Colored Image" click="coloredImage(event)" />
+		<views:ButtonsWithFilters />
+	</s:VGroup>
+</s:View>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.*;
+			
+			protected const BLUR:Class = flash.filters.BlurFilter;
+			protected const GLOW:Class = flash.filters.GlowFilter;
+			protected const SHADOW:Class = flash.filters.DropShadowFilter;
+			
+			protected function addFilter(value:Class):void {
+				var arr:Array = this.filters.concat();
+				var fil:BitmapFilter = new value() as BitmapFilter;
+				arr.push(fil);
+				filters = arr;
+			}
+		]]>
+	</fx:Script>
+	<s:Button click="addFilter(BLUR)" label="Blur"/>
+	<s:Button click="addFilter(GLOW)" label="Glow"/>
+	<s:Button click="addFilter(SHADOW)" label="Shadow"/>
+</s:Group>

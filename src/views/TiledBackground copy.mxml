@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="TiledBackground" xmlns:components="components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.ColorMatrixFilter;
+			
+			import mx.collections.ArrayCollection;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import data.PatternAssets;
+			[Bindable]
+			public var patterns:ArrayCollection = new ArrayCollection([
+				{label:"Paper", data:1}, 
+				{label:"School", data:2}, 
+				{label:"Waves", data:3},
+				{label:"Swirl", data:4},
+				{label:"Symphony", data:5},
+				{label:"RicePaper", data:6},
+				{label:"Snow", data:7},
+				{label:"Crossword", data:8},
+				{label:"Brushed", data:9}]);
+			
+			protected function dropdownlist1_changeHandler(event:IndexChangeEvent):void
+			{
+				var patternName : String = patterns[patternDropDown.selectedIndex].label;
+				trace("Pattern: " + patternName);
+				backgroundTileFile.source = PatternAssets.getNamedPattern(patternName);
+				var imageClass : Class = PatternAssets.getNamedPattern(patternName);
+//				tiledBackground.setBackgroundImage(imageClass);
+			}
+			
+			protected function goBack(event:MouseEvent):void
+			{
+				navigator.popView();
+			}
+			
+			private function applyColor(event:Event):void {
+	//			tiledBackground.applyColor(Number(red.text),Number(green.text),Number(blue.text));				
+				var matrix:Array = new Array();
+				matrix = matrix.concat([Number(red.text), 0, 0, 0, 0]); // red
+				matrix = matrix.concat([0, Number(green.text), 0, 0, 0]); // green
+				matrix = matrix.concat([0, 0, Number(blue.text), 0, 0]); // blue
+				matrix = matrix.concat([0, 0, 0, 1, 0]); // alpha	
+//				applyFilter(backgroundTileFile,matrix);
+			}
+			
+			private function applyFilter(child:DisplayObject, matrix:Array):void {
+				var filter:ColorMatrixFilter = new ColorMatrixFilter(matrix);
+				var filters:Array = new Array();
+				filters.push(filter);
+				child.filters = filters;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Rect id="backgroundRect" left="0" right="0" top="0" bottom="0"  >
+		<s:fill>
+			<s:BitmapFill id="backgroundTileFile" source="@Embed('assets/patterns/seamless_paper_texture.png')" fillMode="repeat" />
+		</s:fill>
+	</s:Rect>
+	
+	
+	<components:TiledBackgroundRect2 id="tiledBackground"/> 
+	
+	<s:VGroup paddingTop="100" paddingLeft="100">
+		
+		
+		<s:Label text="Select Pattern:" />
+		<s:DropDownList id="patternDropDown" dataProvider="{patterns}" selectedIndex="0" labelField="label" width="300" change="dropdownlist1_changeHandler(event)"/>
+		<s:HGroup>
+			<s:Label text="Red:" />
+			<s:TextInput id="red" width="100"/>
+			<s:Label text="Green:" />
+			<s:TextInput id="green" width="100"/>
+			<s:Label text="Blue:" />
+			<s:TextInput id="blue" width="100" />
+		</s:HGroup>
+		<s:Button label="Add Color" click="applyColor(event)" />
+		<s:Button label="Back" click="goBack(event)" />
+	</s:VGroup>
+</s:View>

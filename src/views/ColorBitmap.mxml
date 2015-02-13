@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="ColorBitmap" xmlns:components="components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.ColorMatrixFilter;
+			
+			
+			
+			private function applyColor(event:Event):void {
+				
+				var matrix:Array = new Array();
+				matrix = matrix.concat([Number(red.text), 0, 0, 0, 0]); // red
+				matrix = matrix.concat([0, Number(green.text), 0, 0, 0]); // green
+				matrix = matrix.concat([0, 0, Number(blue.text), 0, 0]); // blue
+				matrix = matrix.concat([0, 0, 0, 1, 0]); // alpha
+				
+				applyFilter(grayScaleImage, matrix);
+				applyFilter(grayScaleImage2, matrix);
+				applyFilter(grayScaleImage3, matrix);
+				applyFilter(colorCartoon, matrix);
+			}
+			
+			private function applyFilter(child:DisplayObject, matrix:Array):void {
+				var filter:ColorMatrixFilter = new ColorMatrixFilter(matrix);
+				var filters:Array = new Array();
+				filters.push(filter);
+				child.filters = filters;
+			}
+			
+			
+			protected function goBack(event:MouseEvent):void
+			{
+				navigator.popView();	
+			}
+			
+		]]>
+	</fx:Script>
+	<components:TiledBackgroundRect />
+	<s:VGroup>
+		<s:HGroup>
+			<s:Image id="grayScaleImage" source="@Embed('assets/patterns/brushed/brushed_@2X.png')" />
+			<s:Image id="grayScaleImage3" source="@Embed('assets/patterns/nice_snow/nice_snow_@2X.png')" />
+			
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="Red:" />
+			<s:TextInput id="red" width="100"/>
+			<s:Label text="Green:" />
+			<s:TextInput id="green" width="100"/>
+			<s:Label text="Blue:" />
+			<s:TextInput id="blue" width="100" />
+		</s:HGroup>
+		<s:Button label="Add Color" click="applyColor(event)" />	
+		<s:Button label="Back" click="goBack(event)" /> 
+		<s:Image id="colorCartoon" source="@Embed('assets/Baby Birds.eps.ai.png')" height="200" width="300" />
+		<s:Image id="grayScaleImage2" source="@Embed('assets/patterns/light_grey/light_grey_@2X.jpg')" />
+	</s:VGroup>
+</s:View>
