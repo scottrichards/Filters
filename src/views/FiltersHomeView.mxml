@@ -6,8 +6,9 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import flash.filters.*;
 			import data.PatternAssets;
+			
+			import flash.filters.*;
 			
 			protected const BLUR:Class = flash.filters.BlurFilter;
 			protected const GLOW:Class = flash.filters.GlowFilter;
@@ -42,6 +43,7 @@
 		<s:Button label="Drop Shadow" click="addDropShadow(event)" />
 		<s:Button label="Background Tiles" click="backgroundTiles(event)" />
 		<s:Button label="Colored Image" click="coloredImage(event)" />
+		<s:Button label="Vector Background" click="navigator.pushView(views.VectorBackgroundView)" />
 		<views:ButtonsWithFilters />
 	</s:VGroup>
 </s:View>

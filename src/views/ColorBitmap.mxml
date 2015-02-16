@@ -44,7 +44,6 @@
 		<s:HGroup>
 			<s:Image id="grayScaleImage" source="@Embed('assets/patterns/brushed/brushed_@2X.png')" />
 			<s:Image id="grayScaleImage3" source="@Embed('assets/patterns/nice_snow/nice_snow_@2X.png')" />
-			
 		</s:HGroup>
 		<s:HGroup>
 			<s:Label text="Red:" />

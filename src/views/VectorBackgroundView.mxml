@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="VectorBackgroundView"
+		creationComplete="creationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.filters.ColorMatrixFilter;
+			
+			import mx.events.FlexEvent;
+			import flash.geom.*;
+			
+			import utility.ColorUtility;
+			[Embed(source="assets/swfs/Crystaline01.swf")] 
+			[Bindable] 
+			public var crystaline : Class;
+			
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				var matrix : Matrix = new Matrix();
+				backgroundSwf.cacheAsBitmapMatrix = matrix;
+			}
+			
+			private function createColorMatrix(red : Number, green : Number, blue : Number):Array {	
+				var matrix:Array = new Array();
+				matrix = matrix.concat([Number(red), 0, 0, 0, 0]); // red
+				matrix = matrix.concat([0, Number(green), 0, 0, 0]); // green
+				matrix = matrix.concat([0, 0, Number(blue), 0, 0]); // blue
+				matrix = matrix.concat([0, 0, 0, 1, 0]); // alpha
+				return matrix;
+			}
+			
+			private function applyFilter( matrix:Array):void {
+				var filter:ColorMatrixFilter = new ColorMatrixFilter(matrix);
+				var filters:Array = new Array();
+				filters.push(filter);
+				backgroundSwf.filters = filters;
+				
+				
+			}
+			
+			
+			public function applyHexColor(hexString : String):void
+			{
+				var rgb : Object = ColorUtility.hexStringToRGB(hexString);
+				applyColor(rgb.red,rgb.green,rgb.blue);
+			}
+			
+			public function applyColor(red : Number, green : Number, blue : Number):void
+			{
+				var colorMatrix : Array = createColorMatrix(red,green,blue);
+				applyFilter(colorMatrix);
+			}
+			
+			protected function addColor(event:MouseEvent):void
+			{
+				applyHexColor(hexColor.text);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Image top="100" cacheAsBitmap="true"  id="backgroundSwf" source="@Embed(source='assets/swfs/Crystaline01Scott.swf', symbol='Backgrounds_Crystaline01')"/>
+	<!-- <s:MovieClipSWFLoader width="800" height="1000" source="@Embed(source='assets/swfs/Crystaline01.swf', symbol='Backgrounds_Crystaline01')"/> -->
+	<s:VGroup>
+		<s:HGroup>
+			<s:Label text="Hex Color: " />
+			<s:TextInput id="hexColor" />
+			<s:Button label="Add Color" click="addColor(event)" />
+		</s:HGroup>
+
+	</s:VGroup>
+</s:View>
