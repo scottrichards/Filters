@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="SWFLoaderView"
+		contentCreationComplete="contentCreationCompleteHandler(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.MovieClipSWFLoader;
+			import mx.events.FlexEvent;
+			
+			
+			private var _swfLoader : MovieClipSWFLoader;
+
+			
+			protected function contentCreationCompleteHandler(event:FlexEvent):void
+			{
+				_swfLoader = new MovieClipSWFLoader();
+				_swfLoader.autoStop = true;
+				_swfLoader.percentWidth = 100;
+				_swfLoader.maintainAspectRatio = true;	// maintain the aspect ratio
+				_swfLoader.addEventListener(Event.COMPLETE,loadComplete);
+				_swfLoader.load("assets/swfs/Crystaline01.swf");
+			}
+			
+			protected function loadComplete(event:Event):void
+			{
+				trace("SWF LOAD COMPLETE !!!!");
+				textArea.text += "SWF LOAD COMPLETE !!!!";
+				var displayObject : DisplayObject = _swfLoader.movieClip.getChildByName("Backgrounds_Crystaline01");
+				trace("displayObject.name: " + displayObject.name);
+			}
+			
+		]]>
+	</fx:Script>
+	<s:VGroup>
+		<s:Label text="Movie Clip Loader" />
+		<s:TextArea id="textArea" />
+	</s:VGroup>
+</s:View>

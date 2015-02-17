@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  initialize="initializeHandler(event)"
+		  creationComplete="creationCompleteHandler(event)"
+		  >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.MovieClipSWFLoader;
+			import mx.events.FlexEvent;
+			
+//			import events.RewardEvent;
+			
+			private var _swfLoader : MovieClipSWFLoader;
+			private var _paused : Boolean;
+			
+			private function init():void
+			{
+				if (!_swfLoader) {
+					_swfLoader = new MovieClipSWFLoader();
+					_swfLoader.autoStop = true;
+					_swfLoader.percentWidth = 100;
+					_swfLoader.maintainAspectRatio = true;	// maintain the aspect ratio
+				}
+			}
+			
+			protected function initializeHandler(event:FlexEvent):void
+			{
+				init();	
+			}
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+			}
+			
+			//========================
+			//  Public Methods
+			//========================
+			
+			
+			public function loadSwf(swfPath:String):void 
+			{	
+				init();	// need to make sure we initialized the swfLoader
+				_swfLoader.addEventListener(Event.COMPLETE,loadComplete);
+				_swfLoader.load(swfPath);
+			}
+				
+			public function togglePlay():void{
+				if (!_paused) {
+					_swfLoader.stop();
+				} else 
+					_swfLoader.play();
+				_paused = !_paused;
+			}
+			
+			public function goToStartAndPlay():void {
+				_swfLoader.movieClip.addEventListener(Event.ENTER_FRAME, everyFrame);
+				this.addElement(_swfLoader);
+				_swfLoader.gotoAndPlay(1);
+			}
+			
+			public function play():void {
+				_swfLoader.play();
+			}
+			
+			private function stop():void {
+				_swfLoader.stop();
+			}
+			
+			protected function loadComplete(event:Event):void
+			{
+				trace("SWF LOAD COMPLETE !!!!");
+			}
+			
+			// This function is called when the enterFrame event is triggered, meaning  
+			// it's called once per frame. 
+			protected function everyFrame(event:Event):void 
+			{ 
+				trace("At Frame #: " + _swfLoader.movieClip.currentFrame );
+				if (_swfLoader.movieClip && _swfLoader.movieClip.currentFrame >= _swfLoader.movieClip.totalFrames) 
+				{
+					trace("STOP PLAYING MOVIE!!!!!!!!!!!!!!!!!!!!");
+					_swfLoader.stop();
+					_swfLoader.gotoFirstFrameAndStop();
+					_swfLoader.movieClip.removeEventListener(Event.ENTER_FRAME, everyFrame);
+//					dispatchEvent(new RewardEvent(RewardEvent.REWARD_END,true));
+					this.removeElement(_swfLoader);
+				} 
+			} 
+			
+		]]>
+	</fx:Script>
+</s:VGroup>
