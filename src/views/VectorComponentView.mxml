@@ -24,7 +24,11 @@
 			
 		]]>
 	</fx:Script>
-	<components:VectorBackgroundRect id="vectorBackground" />
+	<s:navigationContent>
+		<s:Button label="Back" click="navigator.popToFirstView();"/>
+	</s:navigationContent>
+	
+	<components:VectorBackgroundRect id="vectorBackground" hexColor="dc6785" imageClass="@Embed(source='assets/swfs/Crystaline01.swf', symbol='Backgrounds_Crystaline01')" />
 	<s:VGroup>
 		<s:HGroup>
 			<s:Label text="Hex Color: " />

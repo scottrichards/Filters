@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark"
-		left="0" right="0" top="0" bottom="0">
+		left="0" right="0" top="0" bottom="0"
+		creationComplete="creationCompleteHandler(event)"
+		>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
@@ -16,10 +18,16 @@
 			[Bindable]
 			public var imageClass : Class;
 			
+			[Bindable]
+			public var hexColor : String;
+			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				var matrix : Matrix = new Matrix();
-				backgroundSwf.cacheAsBitmapMatrix = matrix;
+				backgroundSwf.cacheAsBitmapMatrix = matrix;		// Terry suggested this optimization
+				if (hexColor.length) {
+					applyHexColor(hexColor);
+				}
 			}
 			
 			private function createColorMatrix(red : Number, green : Number, blue : Number):Array {	
@@ -51,9 +59,14 @@
 				applyFilter(colorMatrix);
 			}
 			
+			public function setImageClass(imageClass : Class):void
+			{
+				backgroundSwf.source = imageClass;
+			}
+			
 			
 			
 		]]>
 	</fx:Script>
-	<s:Image top="100" height="100%" cacheAsBitmap="true"  id="backgroundSwf" source="@Embed(source='assets/swfs/Crystaline01.swf', symbol='Backgrounds_Crystaline01')"/>
+	<s:Image height="100%" width="100%" cacheAsBitmap="true"  id="backgroundSwf" source="{imageClass}"/>
 </s:VGroup>

@@ -58,6 +58,10 @@
 			
 		]]>
 	</fx:Script>
+	<s:navigationContent>
+		<s:Button label="Back" click="navigator.popToFirstView();"/>
+	</s:navigationContent>
+	
 	<s:Image top="100" height="100%" cacheAsBitmap="true"  id="backgroundSwf" source="@Embed(source='assets/swfs/Crystaline01.swf', symbol='Backgrounds_Crystaline01')"/>
 	<s:VGroup>
 		<s:HGroup>
