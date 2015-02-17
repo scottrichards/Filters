@@ -44,6 +44,7 @@
 		<s:Button label="Background Tiles" click="backgroundTiles(event)" />
 		<s:Button label="Colored Image" click="coloredImage(event)" />
 		<s:Button label="Vector Background" click="navigator.pushView(views.VectorBackgroundView)" />
+		<s:Button label="Vector Component" click="navigator.pushView(views.VectorComponentView)" />
 		<s:Button label="SWF Loader" click="navigator.pushView(views.SWFLoaderView)" />
 		<views:ButtonsWithFilters />
 	</s:VGroup>

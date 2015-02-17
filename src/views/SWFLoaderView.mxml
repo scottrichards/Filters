@@ -29,8 +29,12 @@
 			{
 				trace("SWF LOAD COMPLETE !!!!");
 				textArea.text += "SWF LOAD COMPLETE !!!!";
-				var displayObject : DisplayObject = _swfLoader.movieClip.getChildByName("Backgrounds_Crystaline01");
-				trace("displayObject.name: " + displayObject.name);
+				if (_swfLoader.movieClip) {
+					var displayObject : DisplayObject = _swfLoader.movieClip.getChildByName("Backgrounds_Crystaline01");
+					if (displayObject)
+						trace("displayObject.name: " + displayObject.name);
+				}
+				var definitions:Vector.<String> = this.loaderInfo.applicationDomain.getQualifiedDefinitionNames();
 			}
 			
 		]]>
